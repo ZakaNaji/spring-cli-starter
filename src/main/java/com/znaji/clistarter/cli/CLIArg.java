@@ -1,0 +1,14 @@
+package com.znaji.clistarter.cli;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface CLIArg {
+    String value();
+    String description() default "";
+    boolean required() default false;
+}

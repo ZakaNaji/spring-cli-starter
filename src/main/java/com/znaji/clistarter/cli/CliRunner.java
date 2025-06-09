@@ -1,10 +1,11 @@
 package com.znaji.clistarter.cli;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,11 @@ public class CliRunner implements ApplicationContextAware {
 
     List<ResolvedCommand> commands = new ArrayList<>();
     private ApplicationContext applicationContext;
+    private final CommandArgsBinder commandArgsBinder;
+
+    public CliRunner(CommandArgsBinder commandArgsBinder) {
+        this.commandArgsBinder = commandArgsBinder;
+    }
 
     @PostConstruct
     public void init() {
@@ -22,25 +28,28 @@ public class CliRunner implements ApplicationContextAware {
         Map<String, Object> cliCommandBeans = applicationContext.getBeansWithAnnotation(CLICommand.class);
 
         for (Object bean : cliCommandBeans.values()) {
-            CLICommand meta = bean.getClass().getAnnotation(CLICommand.class);
-            String name = meta.name();
-            String description = meta.description();
-            Consumer<CommandContext> executor;
-
-            if (bean instanceof ConsoleCommand consoleCommand) {
-                executor = consoleCommand::execute;
-            } else {
-                executor = ctx -> {
-                    try {
-                        bean.getClass().getMethod("execute", CommandContext.class)
-                                .invoke(bean, ctx);
-                    } catch (Exception e) {
-                        throw new RuntimeException("Error invoking command: " + name, e);
-                    }
+            if (bean instanceof TyperCommand<?>) {
+                CLICommand meta = bean.getClass().getAnnotation(CLICommand.class);
+                String name = meta.name();
+                String description = meta.description();
+                Consumer<CommandContext> executor= commandContext -> {
+                    Class<?> type = findGenericType(bean.getClass());
+                    Object parsed = commandArgsBinder.bind(type, commandContext);
+                    ((TyperCommand<Object>)bean).execute(parsed);
                 };
+                commands.add(new ResolvedCommand(name, description, executor));
             }
-            commands.add(new ResolvedCommand(name, description, executor));
+
         }
+    }
+
+    private Class<?> findGenericType(Class<?> aClass) {
+        for (Type type : aClass.getGenericInterfaces()) {
+            if (type instanceof ParameterizedType pt && pt.getRawType() == TyperCommand.class) {
+                return (Class<?>) pt.getActualTypeArguments()[0];
+            }
+        }
+        throw new IllegalStateException("Cannot determine generic type of TypedCommand");
     }
 
     public void run() {
