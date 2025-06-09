@@ -1,9 +1,12 @@
 package com.znaji.clistarter.cli;
 
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
@@ -17,6 +20,19 @@ public class ConsoleCommandRegistrar implements ImportBeanDefinitionRegistrar {
         for (BeanDefinition beanCandidate : scanner.findCandidateComponents(basePackage)) {
             registry.registerBeanDefinition(beanCandidate.getBeanClassName(), beanCandidate);
         }
+
+        //register mandatory services in case they were not already set by consumer:
+        registerBeanIfAbsent(registry, "conversionService", DefaultConversionService.class);
+        registerBeanIfAbsent(registry, "commandArgsBinder", CommandArgsBinder.class);
+        registerBeanIfAbsent(registry, "cliRunner", CliRunner.class);
+    }
+
+    private void registerBeanIfAbsent(BeanDefinitionRegistry registry, String beanName, Class<?> clazz) {
+        if (!registry.containsBeanDefinition(beanName)) {
+            BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
+            beanDefinitionBuilder.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
+            registry.registerBeanDefinition(beanName, beanDefinitionBuilder.getBeanDefinition());
+        }
     }
 
     private String getBasePackage(AnnotationMetadata importingClassMetadata) {
@@ -24,4 +40,6 @@ public class ConsoleCommandRegistrar implements ImportBeanDefinitionRegistrar {
         int lastDot = className.lastIndexOf(".");
         return (lastDot != -1)? className.substring(0, lastDot) : "";
     }
+
+
 }
