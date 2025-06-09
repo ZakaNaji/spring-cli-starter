@@ -12,18 +12,4 @@ import org.springframework.core.convert.support.DefaultConversionService;
 @EnableConsoleCommands
 public class AppConfig {
 
-    @Bean
-    public ConversionService conversionService() {
-        return new DefaultConversionService();
-    }
-
-    @Bean
-    public CommandArgsBinder commandArgsBinder(ConversionService conversionService) {
-        return new CommandArgsBinder(conversionService);
-    }
-
-    @Bean
-    public CliRunner cliRunner(CommandArgsBinder commandArgsBinder) {
-        return new CliRunner(commandArgsBinder);
-    }
 }

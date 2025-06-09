@@ -24,6 +24,9 @@ public class ConsoleCommandRegistrar implements ImportBeanDefinitionRegistrar {
         //register mandatory services in case they were not already set by consumer:
         registerBeanIfAbsent(registry, "conversionService", DefaultConversionService.class);
         registerBeanIfAbsent(registry, "commandArgsBinder", CommandArgsBinder.class);
+        registerBeanIfAbsent(registry, "defaultInputSource", DefaultInputSource.class);
+        registerBeanIfAbsent(registry, "commandUI", CommandUI.class);
+        registerBeanIfAbsent(registry, "commandDiscoverer", CommandDiscoverer.class);
         registerBeanIfAbsent(registry, "cliRunner", CliRunner.class);
     }
 

@@ -20,6 +20,6 @@ public class ArgsParser {
                 rawArgs.add(token);
             }
         }
-        return new CommandContext(rawArgs, namedArgs);
+        return new CommandContext(rawArgs, namedArgs, tokens[0]);
     }
 }

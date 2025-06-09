@@ -1,5 +1,5 @@
 package com.znaji.clistarter.cli;
 
-public interface TyperCommand<T> {
+public interface TypedCommand<T> {
     void execute(T args);
 }

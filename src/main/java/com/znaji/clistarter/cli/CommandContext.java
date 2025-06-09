@@ -6,10 +6,12 @@ import java.util.Map;
 public class CommandContext {
     private final List<String> rawArgs;
     private final Map<String, String> namedArgs;
+    private final String CommandName;
 
-    public CommandContext(List<String> rawArgs, Map<String, String> namedArgs) {
+    public CommandContext(List<String> rawArgs, Map<String, String> namedArgs, String commandName) {
         this.rawArgs = rawArgs;
         this.namedArgs = namedArgs;
+        CommandName = commandName;
     }
 
     public List<String> getArgs() {
@@ -26,5 +28,9 @@ public class CommandContext {
 
     public boolean has(String name) {
         return namedArgs.containsKey(name);
+    }
+
+    public String getCommandName() {
+        return CommandName;
     }
 }
