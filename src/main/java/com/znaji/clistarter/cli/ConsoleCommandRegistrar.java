@@ -25,6 +25,7 @@ public class ConsoleCommandRegistrar implements ImportBeanDefinitionRegistrar {
         registerBeanIfAbsent(registry, "conversionService", DefaultConversionService.class);
         registerBeanIfAbsent(registry, "commandArgsBinder", CommandArgsBinder.class);
         registerBeanIfAbsent(registry, "defaultInputSource", DefaultInputSource.class);
+        registerBeanIfAbsent(registry, "defaultOutputTarget", DefaultOutputTarget.class);
         registerBeanIfAbsent(registry, "commandUI", CommandUI.class);
         registerBeanIfAbsent(registry, "commandDiscoverer", CommandDiscoverer.class);
         registerBeanIfAbsent(registry, "cliRunner", CliRunner.class);

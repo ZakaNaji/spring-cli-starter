@@ -2,9 +2,11 @@ package com.znaji.clistarter.cli;
 
 public class CommandUI {
     private final InputSource inputSource;
+    private final OutputTarget outputTarget;
 
-    public CommandUI(InputSource inputSource) {
+    public CommandUI(InputSource inputSource, OutputTarget outputTarget) {
         this.inputSource = inputSource;
+        this.outputTarget = outputTarget;
     }
 
     public void welcome(CommandDispatcher dispatcher) {
@@ -17,5 +19,9 @@ public class CommandUI {
 
     public String readInput() {
         return inputSource.nextInput();
+    }
+
+    public void printToOutput(String out) {
+        outputTarget.print(out);
     }
 }

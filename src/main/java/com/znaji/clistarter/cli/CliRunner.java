@@ -30,7 +30,7 @@ public class CliRunner {
             commandUI.welcome(commandDispatcher);
             String input = commandUI.readInput().trim();
             if (input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("quit")) {
-                System.out.println("Exiting CLI...");
+                commandUI.printToOutput("Exiting CLI...");
                 break;
             }
 
@@ -38,7 +38,7 @@ public class CliRunner {
             ResolvedCommand resolvedCommand = commandDispatcher.resolvedCommand(commandContext.getCommandName());
 
             if (resolvedCommand == null) {
-                System.out.println("Unknown command: " + commandContext.getCommandName());
+                commandUI.printToOutput("Unknown command: " + commandContext.getCommandName());
             } else {
                 resolvedCommand.run(commandContext);
             }
