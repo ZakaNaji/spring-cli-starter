@@ -1,21 +1,20 @@
 package com.znaji.clistarter.cli;
 
+import com.znaji.clistarter.cli.exception.CLIExceptionHandler;
+import com.znaji.clistarter.cli.exception.UnknownCommandException;
 import jakarta.annotation.PostConstruct;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Scanner;
 
 public class CliRunner {
 
     private final CommandDiscoverer commandDiscoverer;
     private final CommandUI commandUI;
+    private final CLIExceptionHandler handler;
     private CommandDispatcher commandDispatcher;
 
-    public CliRunner(CommandDiscoverer commandDiscoverer, CommandUI commandUI) {
+    public CliRunner(CommandDiscoverer commandDiscoverer, CommandUI commandUI, CLIExceptionHandler handler) {
         this.commandDiscoverer = commandDiscoverer;
         this.commandUI = commandUI;
+        this.handler = handler;
     }
 
     @PostConstruct
@@ -34,13 +33,18 @@ public class CliRunner {
                 break;
             }
 
-            CommandContext commandContext = ArgsParser.parse(input);
-            ResolvedCommand resolvedCommand = commandDispatcher.resolvedCommand(commandContext.getCommandName());
+            CommandContext commandContext = null;
+            try {
+                commandContext = ArgsParser.parse(input);
+                ResolvedCommand resolvedCommand = commandDispatcher.resolvedCommand(commandContext.getCommandName());
 
-            if (resolvedCommand == null) {
-                commandUI.printToOutput("Unknown command: " + commandContext.getCommandName());
-            } else {
-                resolvedCommand.run(commandContext);
+                if (resolvedCommand == null) {
+                    throw new UnknownCommandException(commandContext.getCommandName());
+                } else {
+                    resolvedCommand.run(commandContext);
+                }
+            } catch (Exception e) {
+                handler.handle(e, commandContext);
             }
         }
     }

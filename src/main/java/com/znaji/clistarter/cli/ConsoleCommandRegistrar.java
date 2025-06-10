@@ -1,5 +1,6 @@
 package com.znaji.clistarter.cli;
 
+import com.znaji.clistarter.cli.exception.DefaultCLIExceptionHandler;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -28,6 +29,7 @@ public class ConsoleCommandRegistrar implements ImportBeanDefinitionRegistrar {
         registerBeanIfAbsent(registry, "defaultOutputTarget", DefaultOutputTarget.class);
         registerBeanIfAbsent(registry, "commandUI", CommandUI.class);
         registerBeanIfAbsent(registry, "commandDiscoverer", CommandDiscoverer.class);
+        registerBeanIfAbsent(registry, "defaultCLIExceptionHandler", DefaultCLIExceptionHandler.class);
         registerBeanIfAbsent(registry, "cliRunner", CliRunner.class);
     }
 

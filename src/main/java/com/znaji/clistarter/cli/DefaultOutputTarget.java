@@ -5,4 +5,9 @@ public class DefaultOutputTarget implements OutputTarget{
     public void print(String out) {
         System.out.println(out);
     }
+
+    @Override
+    public void error(String error) {
+        System.err.println(error);
+    }
 }

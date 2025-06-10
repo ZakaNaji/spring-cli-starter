@@ -1,5 +1,7 @@
 package com.znaji.clistarter.cli;
 
+import com.znaji.clistarter.cli.exception.CLIException;
+import com.znaji.clistarter.cli.exception.MissingArgumentException;
 import org.springframework.core.convert.ConversionService;
 
 import java.lang.reflect.Field;
@@ -25,7 +27,7 @@ public class CommandArgsBinder {
                     String argValue = commandContext.get(argName);
 
                     if (argValue == null && cliArg.required()) {
-                        throw new IllegalArgumentException("Missing required argument: " + argName);
+                        throw new MissingArgumentException(argName);
                     }
 
                     if (argValue != null) {
@@ -40,7 +42,7 @@ public class CommandArgsBinder {
                     String flagName = cliFlag.value();
 
                     if (field.getType() != Boolean.class && field.getType() != boolean.class) {
-                        throw new IllegalArgumentException("@CLIFlag must be used on a boolean field: " + field.getName());
+                        throw new CLIException("@CLIFlag must be used on a boolean field: " + field.getName());
                     }
 
                     field.set(instance, commandContext.has(flagName));
@@ -48,7 +50,7 @@ public class CommandArgsBinder {
             }
             return instance;
         } catch (Exception e) {
-            throw new RuntimeException("Error binding command arguments to class: " + clazz.getName(), e);
+            throw new CLIException("binding command arguments to class: " + clazz.getName(), e);
         }
     }
 }
