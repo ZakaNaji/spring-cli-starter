@@ -31,8 +31,12 @@ public class CommandArgsBinder {
                     }
 
                     if (argValue != null) {
-                        Object converted = conversionService.convert(argValue, field.getType());
-                        field.set(instance, converted);
+                        try {
+                            Object converted = conversionService.convert(argValue, field.getType());
+                            field.set(instance, converted);
+                        } catch (Exception e) {
+                            throw new CLIException(String.format("Unable to convert arg [%s] to type [%s]", argValue, field.getType().getName() ));
+                        }
                     }
                     continue;
                 }

@@ -2,6 +2,7 @@ package com.znaji.clistarter.cli;
 
 import com.znaji.clistarter.cli.exception.CLIExceptionHandler;
 import com.znaji.clistarter.cli.exception.UnknownCommandException;
+import com.znaji.clistarter.cli.service.ArgsParserService;
 import jakarta.annotation.PostConstruct;
 
 public class CliRunner {
@@ -9,12 +10,14 @@ public class CliRunner {
     private final CommandDiscoverer commandDiscoverer;
     private final CommandUI commandUI;
     private final CLIExceptionHandler handler;
+    private final ArgsParserService argsParserService;
     private CommandDispatcher commandDispatcher;
 
-    public CliRunner(CommandDiscoverer commandDiscoverer, CommandUI commandUI, CLIExceptionHandler handler) {
+    public CliRunner(CommandDiscoverer commandDiscoverer, CommandUI commandUI, CLIExceptionHandler handler, ArgsParserService argsParserService) {
         this.commandDiscoverer = commandDiscoverer;
         this.commandUI = commandUI;
         this.handler = handler;
+        this.argsParserService = argsParserService;
     }
 
     @PostConstruct
@@ -35,7 +38,7 @@ public class CliRunner {
 
             CommandContext commandContext = null;
             try {
-                commandContext = ArgsParser.parse(input);
+                commandContext = argsParserService.parse(input);
                 ResolvedCommand resolvedCommand = commandDispatcher.resolvedCommand(commandContext.getCommandName());
 
                 if (resolvedCommand == null) {
