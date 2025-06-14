@@ -1,6 +1,5 @@
-package com.znaji.clistarter.cli;
+package com.znaji.clistarter.cli.config;
 
-import com.znaji.clistarter.cli.config.CLIConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
