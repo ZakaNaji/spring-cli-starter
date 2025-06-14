@@ -2,30 +2,44 @@ package com.znaji.clistarter.cli.service;
 
 import com.znaji.clistarter.cli.core.CommandContext;
 import com.znaji.clistarter.cli.exception.CLIException;
+import com.znaji.clistarter.cli.parser.ParseState;
+import com.znaji.clistarter.cli.parser.Token;
+import com.znaji.clistarter.cli.parser.TokenParser;
+import com.znaji.clistarter.cli.parser.Tokenizer;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class ArgsParserServiceImpl implements ArgsParserService {
-    private final List<ArgsParserStrategy> argsParserStrategies;
+    private final Tokenizer tokenizer;
+    private final List<TokenParser> parsers;
 
-    public ArgsParserServiceImpl(List<ArgsParserStrategy> argsParserStrategies) {
-        this.argsParserStrategies = argsParserStrategies;
+    public ArgsParserServiceImpl(Tokenizer tokenizer, List<TokenParser> parsers) {
+        this.tokenizer = tokenizer;
+        this.parsers = parsers;
     }
 
     @Override
     public CommandContext parse(String input) {
-        String[] tokens = input.trim().split("\\s+");
+        List<Token> tokens = tokenizer.tokenize(input);
+        ParseState state = new ParseState();
+        ListIterator<Token> tokenIterator = tokens.listIterator();
 
-        if (tokens.length == 0) {
+        if (tokens.isEmpty()) {
             throw new CLIException("No input provided.");
         }
 
-        for (ArgsParserStrategy strategy : argsParserStrategies) {
-            if (strategy.supports(tokens)) {
-                return strategy.parse(tokens);
+        while(tokenIterator.hasNext()) {
+            Token token = tokenIterator.next();
+            for (TokenParser parser : parsers) {
+                if (parser.supports(token)) {
+                    parser.parse(token, tokenIterator, state);
+                    break;
+                }
             }
         }
 
-        throw new CLIException("No suitable parsing strategy found for input: " + input);
+        return state.toCommandContext();
     }
 }

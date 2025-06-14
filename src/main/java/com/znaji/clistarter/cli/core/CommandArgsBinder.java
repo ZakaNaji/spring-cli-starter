@@ -37,7 +37,7 @@ public class CommandArgsBinder {
                             Object converted = conversionService.convert(argValue, field.getType());
                             field.set(instance, converted);
                         } catch (Exception e) {
-                            throw new CLIException(String.format("Unable to convert arg [%s] to type [%s]", argValue, field.getType().getName() ));
+                            throw new CLIException(String.format("Unable to convert arg [%s] to type [%s]", argValue, field.getType().getName()));
                         }
                     }
                     continue;
@@ -55,6 +55,8 @@ public class CommandArgsBinder {
                 }
             }
             return instance;
+        } catch (CLIException e) {
+            throw e;
         } catch (Exception e) {
             throw new CLIException("binding command arguments to class: " + clazz.getName(), e);
         }
