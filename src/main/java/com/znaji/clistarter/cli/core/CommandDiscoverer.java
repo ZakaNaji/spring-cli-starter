@@ -1,4 +1,4 @@
-package com.znaji.clistarter.cli;
+package com.znaji.clistarter.cli.core;
 
 import com.znaji.clistarter.cli.annotation.CLICommand;
 import org.springframework.context.ApplicationContext;

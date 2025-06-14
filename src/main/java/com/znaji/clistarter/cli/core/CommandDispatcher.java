@@ -1,4 +1,4 @@
-package com.znaji.clistarter.cli;
+package com.znaji.clistarter.cli.core;
 
 import java.util.List;
 

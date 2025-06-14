@@ -1,6 +1,6 @@
 package com.znaji.clistarter.cli.service;
 
-import com.znaji.clistarter.cli.CommandContext;
+import com.znaji.clistarter.cli.core.CommandContext;
 import com.znaji.clistarter.cli.exception.CLIException;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package com.znaji.clistarter;
 
 import com.znaji.clistarter.cli.annotation.CLICommand;
-import com.znaji.clistarter.cli.TypedCommand;
+import com.znaji.clistarter.cli.core.TypedCommand;
 
 @CLICommand(
         name = "sum",

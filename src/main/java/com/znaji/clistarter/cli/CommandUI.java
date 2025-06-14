@@ -1,5 +1,8 @@
 package com.znaji.clistarter.cli;
 
+import com.znaji.clistarter.cli.core.CommandDispatcher;
+import com.znaji.clistarter.cli.core.ResolvedCommand;
+
 public class CommandUI {
     private final InputSource inputSource;
     private final OutputTarget outputTarget;
