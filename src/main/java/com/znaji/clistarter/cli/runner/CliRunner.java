@@ -1,4 +1,4 @@
-package com.znaji.clistarter.cli;
+package com.znaji.clistarter.cli.runner;
 
 import com.znaji.clistarter.cli.core.CommandContext;
 import com.znaji.clistarter.cli.core.CommandDiscoverer;

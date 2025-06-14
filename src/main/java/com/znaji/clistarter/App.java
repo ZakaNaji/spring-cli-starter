@@ -1,10 +1,8 @@
 package com.znaji.clistarter;
 
-import com.znaji.clistarter.cli.CliRunner;
+import com.znaji.clistarter.cli.runner.CliRunner;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.function.BiConsumer;
 
 /**
  * Hello world!

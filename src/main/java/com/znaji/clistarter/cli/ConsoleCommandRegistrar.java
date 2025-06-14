@@ -7,6 +7,7 @@ import com.znaji.clistarter.cli.exception.DefaultCLIExceptionHandler;
 import com.znaji.clistarter.cli.io.CommandUI;
 import com.znaji.clistarter.cli.io.DefaultInputSource;
 import com.znaji.clistarter.cli.io.DefaultOutputTarget;
+import com.znaji.clistarter.cli.runner.CliRunner;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
