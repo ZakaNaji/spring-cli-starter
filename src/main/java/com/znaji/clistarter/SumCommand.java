@@ -1,6 +1,6 @@
 package com.znaji.clistarter;
 
-import com.znaji.clistarter.cli.CLICommand;
+import com.znaji.clistarter.cli.annotation.CLICommand;
 import com.znaji.clistarter.cli.TypedCommand;
 
 @CLICommand(

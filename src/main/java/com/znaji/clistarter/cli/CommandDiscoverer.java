@@ -1,5 +1,6 @@
 package com.znaji.clistarter.cli;
 
+import com.znaji.clistarter.cli.annotation.CLICommand;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 

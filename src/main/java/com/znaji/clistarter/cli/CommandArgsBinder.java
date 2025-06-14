@@ -1,5 +1,7 @@
 package com.znaji.clistarter.cli;
 
+import com.znaji.clistarter.cli.annotation.CLIArg;
+import com.znaji.clistarter.cli.annotation.CLIFlag;
 import com.znaji.clistarter.cli.exception.CLIException;
 import com.znaji.clistarter.cli.exception.MissingArgumentException;
 import org.springframework.core.convert.ConversionService;

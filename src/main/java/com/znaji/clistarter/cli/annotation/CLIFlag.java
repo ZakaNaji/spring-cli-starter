@@ -1,4 +1,4 @@
-package com.znaji.clistarter.cli;
+package com.znaji.clistarter.cli.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

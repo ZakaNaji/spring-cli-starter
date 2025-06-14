@@ -1,6 +1,6 @@
 package com.znaji.clistarter;
 
-import com.znaji.clistarter.cli.CLIArg;
+import com.znaji.clistarter.cli.annotation.CLIArg;
 
 public class NumToSum {
     @CLIArg(value = "a", description = "A + ?", required = true)
