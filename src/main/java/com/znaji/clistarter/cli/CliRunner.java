@@ -6,6 +6,7 @@ import com.znaji.clistarter.cli.core.CommandDispatcher;
 import com.znaji.clistarter.cli.core.ResolvedCommand;
 import com.znaji.clistarter.cli.exception.CLIExceptionHandler;
 import com.znaji.clistarter.cli.exception.UnknownCommandException;
+import com.znaji.clistarter.cli.io.CommandUI;
 import com.znaji.clistarter.cli.service.ArgsParserService;
 import jakarta.annotation.PostConstruct;
 

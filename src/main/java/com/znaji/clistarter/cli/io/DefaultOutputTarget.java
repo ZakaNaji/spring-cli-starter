@@ -1,4 +1,4 @@
-package com.znaji.clistarter.cli;
+package com.znaji.clistarter.cli.io;
 
 public class DefaultOutputTarget implements OutputTarget{
     @Override

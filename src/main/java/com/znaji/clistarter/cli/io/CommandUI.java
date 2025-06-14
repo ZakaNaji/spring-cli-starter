@@ -1,4 +1,4 @@
-package com.znaji.clistarter.cli;
+package com.znaji.clistarter.cli.io;
 
 import com.znaji.clistarter.cli.core.CommandDispatcher;
 import com.znaji.clistarter.cli.core.ResolvedCommand;

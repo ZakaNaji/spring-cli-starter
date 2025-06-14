@@ -1,7 +1,7 @@
 package com.znaji.clistarter.cli.exception;
 
 import com.znaji.clistarter.cli.core.CommandContext;
-import com.znaji.clistarter.cli.OutputTarget;
+import com.znaji.clistarter.cli.io.OutputTarget;
 
 public class DefaultCLIExceptionHandler implements CLIExceptionHandler{
 
