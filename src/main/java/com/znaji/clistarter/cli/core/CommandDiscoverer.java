@@ -1,6 +1,8 @@
 package com.znaji.clistarter.cli.core;
 
 import com.znaji.clistarter.cli.annotation.CLICommand;
+import com.znaji.clistarter.cli.utils.Utils;
+import jdk.jshell.execution.Util;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -28,7 +30,7 @@ public class CommandDiscoverer implements ApplicationContextAware {
                 CLICommand annotation = bean.getClass().getAnnotation(CLICommand.class);
 
                 Consumer<CommandContext> executor = commandContext -> {
-                    Class<?> commandArgsType = getCommandArgsType(bean);
+                    Class<?> commandArgsType = Utils.getCommandArgsType(bean);
                     Object parsedArgs = commandArgsBinder.bind(commandArgsType, commandContext);
                     ((TypedCommand<Object>)bean).execute(parsedArgs);
                 };
@@ -42,14 +44,7 @@ public class CommandDiscoverer implements ApplicationContextAware {
         return resolvedCommands;
     }
 
-    private Class<?> getCommandArgsType(Object bean) {
-        for (Type type : bean.getClass().getGenericInterfaces()) {
-            if (type instanceof ParameterizedType pt && pt.getRawType() == TypedCommand.class) {
-                return (Class<?>) pt.getActualTypeArguments()[0];
-            }
-        }
-        throw new IllegalStateException("Cannot determine generic type of TypedCommand");
-    }
+
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {

@@ -4,9 +4,7 @@ import com.znaji.clistarter.cli.annotation.CLICommand;
 import com.znaji.clistarter.cli.core.CommandArgsBinder;
 import com.znaji.clistarter.cli.core.CommandDiscoverer;
 import com.znaji.clistarter.cli.exception.DefaultCLIExceptionHandler;
-import com.znaji.clistarter.cli.io.CommandUI;
-import com.znaji.clistarter.cli.io.DefaultInputSource;
-import com.znaji.clistarter.cli.io.DefaultOutputTarget;
+import com.znaji.clistarter.cli.io.*;
 import com.znaji.clistarter.cli.runner.CliRunner;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -32,8 +30,8 @@ public class ConsoleCommandRegistrar implements ImportBeanDefinitionRegistrar {
         //register mandatory services in case they were not already set by consumer:
         registerBeanIfAbsent(registry, "conversionService", DefaultConversionService.class);
         registerBeanIfAbsent(registry, "commandArgsBinder", CommandArgsBinder.class);
-        registerBeanIfAbsent(registry, "defaultInputSource", DefaultInputSource.class);
-        registerBeanIfAbsent(registry, "defaultOutputTarget", DefaultOutputTarget.class);
+        registerBeanIfAbsent(registry, "inputSource", DefaultInputSource.class);
+        registerBeanIfAbsent(registry, "outputTarget", DefaultOutputTarget.class);
         registerBeanIfAbsent(registry, "commandUI", CommandUI.class);
         registerBeanIfAbsent(registry, "commandDiscoverer", CommandDiscoverer.class);
         registerBeanIfAbsent(registry, "defaultCLIExceptionHandler", DefaultCLIExceptionHandler.class);
